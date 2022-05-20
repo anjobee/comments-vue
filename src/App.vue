@@ -2,16 +2,19 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <medium-style-comments></medium-style-comments>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import MediumStyleComments from "@/components/MediumStyleComments.vue";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    MediumStyleComments
   }
 }
 </script>
