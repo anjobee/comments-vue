@@ -1,7 +1,8 @@
 <template>
   <div class="popup" :style="{top: offsetTop, left: offsetLeft}" ref="popup">
-    <span @click="addComment">Comment</span>
-    <span @click="deleteComment">Delete</span>
+    <span @click="addComment" class="mx-5">Comment</span>
+    <span class="mx-1"> | </span>
+    <span @click="deleteComment" class="mx-5">Delete</span>
   </div>
 </template>
 <script>
@@ -34,7 +35,6 @@ export default {
         console.log(sel.isCollapsed)
         if (sel && !sel.isCollapsed) {
           this.selectedText = sel.toString()
-          // this.range = sel.getRangeAt(0)
           if (sel.rangeCount) {
             this.range = sel.getRangeAt(0).cloneRange();
             if (this.range.getBoundingClientRect) {
