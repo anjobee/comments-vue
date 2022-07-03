@@ -2,90 +2,17 @@
   <v-container>
     <v-row class="text-center">
       <v-col cols="12">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
-      </v-col>
-
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
-        </h1>
-
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a
-            href="https://community.vuetifyjs.com"
-            target="_blank"
-          >Discord Community</a>
-        </p>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          What's next?
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ next.text }}
-          </a>
-        </v-row>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Important Links
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ link.text }}
-          </a>
-        </v-row>
-      </v-col>
-
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Ecosystem
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-row>
+        <div id="commentableArea">
+          <div id="ca01">
+            HELLO
+          </div>
+          <div id="ca02">
+            SECOND DIV
+          </div>
+          <div class="popup" :style="{top: offsetTop, right: offsetRight}" ref="popup">
+            <span class="mx-5">+</span>
+          </div>
+        </div>
       </v-col>
     </v-row>
   </v-container>
@@ -96,56 +23,50 @@
     name: 'HelloWorld',
 
     data: () => ({
-      ecosystem: [
-        {
-          text: 'vuetify-loader',
-          href: 'https://github.com/vuetifyjs/vuetify-loader',
-        },
-        {
-          text: 'github',
-          href: 'https://github.com/vuetifyjs/vuetify',
-        },
-        {
-          text: 'awesome-vuetify',
-          href: 'https://github.com/vuetifyjs/awesome-vuetify',
-        },
-      ],
-      importantLinks: [
-        {
-          text: 'Documentation',
-          href: 'https://vuetifyjs.com',
-        },
-        {
-          text: 'Chat',
-          href: 'https://community.vuetifyjs.com',
-        },
-        {
-          text: 'Made with Vuetify',
-          href: 'https://madewithvuejs.com/vuetify',
-        },
-        {
-          text: 'Twitter',
-          href: 'https://twitter.com/vuetifyjs',
-        },
-        {
-          text: 'Articles',
-          href: 'https://medium.com/vuetify',
-        },
-      ],
-      whatsNext: [
-        {
-          text: 'Explore components',
-          href: 'https://vuetifyjs.com/components/api-explorer',
-        },
-        {
-          text: 'Select a layout',
-          href: 'https://vuetifyjs.com/getting-started/pre-made-layouts',
-        },
-        {
-          text: 'Frequently Asked Questions',
-          href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-        },
-      ],
+      offsetTop: 0,
+      offsetRight: 0
     }),
+    mounted () {
+      const commentableArea = document.getElementById('commentableArea')
+      console.log(commentableArea)
+      const range = new Range()
+      range.selectNode(commentableArea)
+      // range.setStart(welcome, 1)
+      // range.setEnd(welcome, 2)
+      console.log(range)
+      var rect = range.getBoundingClientRect();
+      console.log(rect)
+      this.offsetTop = rect.height
+      const right = rect.left - rect.right
+      console.log(right)
+      console.log(rect.right)
+      this.offsetRight = right
+    },
+    methods: {
+
+    }
   }
 </script>
+
+<style scoped>
+.popup {
+  position: absolute;
+  color: #FFF;
+  background-color: #000;
+  padding: 10px;
+  border-radius: 5px;
+  transform-origin: center center;
+  cursor: pointer;
+}
+.popup:after {
+  content: "";
+  border-bottom: 5px solid #000;
+  border-right: 5px solid #000;
+  border-top: 5px solid transparent;
+  border-left: 5px solid transparent;
+  position: absolute;
+  top: calc(50% - 5px);
+  transform: rotate(135deg);
+  right: calc(100% - 5px);
+}
+</style>

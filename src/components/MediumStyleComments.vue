@@ -31,12 +31,20 @@ export default {
   methods: {
     ListenToDocumentSelection() {
       let sel = window.getSelection();
+
+      console.log(sel)
+
       setTimeout(() => {
+
         console.log(sel.isCollapsed)
+
         if (sel && !sel.isCollapsed) {
           this.selectedText = sel.toString()
           if (sel.rangeCount) {
             this.range = sel.getRangeAt(0).cloneRange();
+
+            console.log(this.range)
+            
             if (this.range.getBoundingClientRect) {
               var rect = this.range.getBoundingClientRect();
               let left = rect.left + (rect.right - rect.left) / 2;
@@ -60,7 +68,21 @@ export default {
       this.range.deleteContents()
     }
   },
+  created () {
+
+  },
   mounted() {
+    const welcome = document.getElementById('commentableArea')
+    console.log(welcome)
+    const range = new Range()
+    range.selectNode(welcome)
+    // range.setStart(welcome, 1)
+    // range.setEnd(welcome, 2)
+    console.log(range)
+    const selection = window.getSelection()
+    selection.removeAllRanges()
+    range.selectNodeContents(welcome)
+    selection.addRange(range)
     this.popupInitialTopOffset = this.$refs.popup.offsetHeight;
     this.popupInitialLeftOffset = this.$refs.popup.offsetWidth;
     console.log(this.popupInitialTopOffset, this.popupInitialLeftOffset);

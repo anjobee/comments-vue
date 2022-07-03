@@ -40,20 +40,20 @@
     <v-main>
       <HelloWorld/>
     </v-main>
-    <medium-style-comments></medium-style-comments>
+    <!-- <medium-style-comments></medium-style-comments> -->
   </v-app>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld';
-import MediumStyleComments from "@/components/MediumStyleComments.vue";
+// import MediumStyleComments from "@/components/MediumStyleComments.vue";
 
 export default {
   name: 'App',
 
   components: {
     HelloWorld,
-    MediumStyleComments
+    // MediumStyleComments
   },
   data: () => ({
   }),
