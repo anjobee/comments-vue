@@ -32,14 +32,12 @@
     }),
     mounted () {
       const commentableArea = document.getElementById('commentableArea')
-      console.log(commentableArea.childNodes)
       for (const child of commentableArea.childNodes) {
         if (child.id === 'popup') {
           this.commentableElements.push(child.childNodes[0])
         }
         this.commentableElements.push(child)
       }
-      console.log(this.commentableElements)
       const range = new Range()
       range.selectNode(commentableArea)
       var rect = range.getBoundingClientRect()
@@ -49,7 +47,6 @@
       const popupRange = new Range()
       popupRange.selectNode(popup)
       this.popupRect = popupRange.getBoundingClientRect()
-      console.log(this.popupRect)
       window.addEventListener("mouseover", this.listenToHover);
     },
     destroyed() {
@@ -58,7 +55,6 @@
     methods: {
       listenToHover (e) {
         if (e.target.id === 'popup') return
-        // GET ALL COMMENTABLE AREA CHILD, THEN ADD REFS TO LISTEN TO
         if (this.commentableElements.includes(e.target)) {
           setTimeout(() => {
             if (e.target.id !== 'popupChild') {
@@ -68,7 +64,7 @@
             const popupOffset = this.popupRect.height * 0.25
             this.offsetTop = `${divRect.top - this.rect.top - popupOffset}px`
             }
-            this.offsetRight = `10%`
+            this.offsetRight = `5%`
           }, 0)
         }
         else {
@@ -80,9 +76,9 @@
 </script>
 
 <style scoped>
-.ce {
+/* .ce {
   height: 3em;
-}
+} */
 
 #commentableArea {
   position: relative;
