@@ -3,14 +3,14 @@
     <v-row class="text-center">
       <v-col cols="12">
         <div id="commentableArea">
-          <div id="ca01">
+          <div class="mt-5 ce">
             HELLO
           </div>
-          <div id="ca02" class="mt-5">
+          <div class="mt-5 ce">
             SECOND DIV
           </div>
           <div class="popup" :style="{top: offsetTop, right: offsetRight}" ref="popup" id="popup">
-            <span class="mx-5">+</span>
+            <span class="mx-5" id="popupChild">+</span>
           </div>
         </div>
       </v-col>
@@ -27,10 +27,19 @@
       offsetRight: "-999em",
       commentableAreaHeight: 0,
       rect: '',
-      popupRect: ''
+      popupRect: '',
+      commentableElements: []
     }),
     mounted () {
       const commentableArea = document.getElementById('commentableArea')
+      console.log(commentableArea.childNodes)
+      for (const child of commentableArea.childNodes) {
+        if (child.id === 'popup') {
+          this.commentableElements.push(child.childNodes[0])
+        }
+        this.commentableElements.push(child)
+      }
+      console.log(this.commentableElements)
       const range = new Range()
       range.selectNode(commentableArea)
       var rect = range.getBoundingClientRect()
@@ -48,13 +57,17 @@
     },
     methods: {
       listenToHover (e) {
-        if (e.target.parentElement && e.target.parentElement.id === "commentableArea" && e.target.id !== 'popup') {
+        if (e.target.id === 'popup') return
+        // GET ALL COMMENTABLE AREA CHILD, THEN ADD REFS TO LISTEN TO
+        if (this.commentableElements.includes(e.target)) {
           setTimeout(() => {
+            if (e.target.id !== 'popupChild') {
             const newRange = new Range()
             newRange.selectNode(e.target)
             const divRect = newRange.getBoundingClientRect()
             const popupOffset = this.popupRect.height * 0.25
             this.offsetTop = `${divRect.top - this.rect.top - popupOffset}px`
+            }
             this.offsetRight = `10%`
           }, 0)
         }
@@ -67,6 +80,10 @@
 </script>
 
 <style scoped>
+.ce {
+  height: 3em;
+}
+
 #commentableArea {
   position: relative;
 }
