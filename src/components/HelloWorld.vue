@@ -6,10 +6,10 @@
           <div id="ca01">
             HELLO
           </div>
-          <div id="ca02">
+          <div id="ca02" class="mt-5">
             SECOND DIV
           </div>
-          <div class="popup" :style="{top: offsetTop, right: offsetRight}" ref="popup">
+          <div class="popup" :style="{top: offsetTop, right: offsetRight}" ref="popup" id="popup">
             <span class="mx-5">+</span>
           </div>
         </div>
@@ -24,31 +24,56 @@
 
     data: () => ({
       offsetTop: 0,
-      offsetRight: 0
+      offsetRight: "-999em",
+      commentableAreaHeight: 0,
+      rect: '',
+      popupRect: ''
     }),
     mounted () {
       const commentableArea = document.getElementById('commentableArea')
-      console.log(commentableArea)
       const range = new Range()
       range.selectNode(commentableArea)
-      // range.setStart(welcome, 1)
-      // range.setEnd(welcome, 2)
-      console.log(range)
-      var rect = range.getBoundingClientRect();
-      console.log(rect)
-      this.offsetTop = rect.height
-      const right = rect.left - rect.right
-      console.log(right)
-      console.log(rect.right)
-      this.offsetRight = right
+      var rect = range.getBoundingClientRect()
+      this.commentableAreaHeight = rect.height
+      this.rect = rect
+      const popup = document.getElementById('popup')
+      const popupRange = new Range()
+      popupRange.selectNode(popup)
+      this.popupRect = popupRange.getBoundingClientRect()
+      console.log(this.popupRect)
+      window.addEventListener("mouseover", this.listenToHover);
+    },
+    destroyed() {
+      window.removeEventListener("mouseover", this.listenToHover);
     },
     methods: {
-
+      listenToHover (e) {
+        if (e.target.parentElement && e.target.parentElement.id === "commentableArea" && e.target.id !== 'popup') {
+          setTimeout(() => {
+            const newRange = new Range()
+            newRange.selectNode(e.target)
+            const divRect = newRange.getBoundingClientRect()
+            // this.offsetTop = `${divRect.bottom - (divRect.height / 2)}px`
+            this.offsetTop = `${divRect.top - this.rect.top - (this.popupRect.height / 2)}px`
+            console.log(this.offsetTop)
+            // const right = this.rect.right - this.rect.left
+            // this.offsetRight = `${right}px`
+            this.offsetRight = `10%`
+          }, 0)
+        }
+        // else {
+        //   this.offsetRight = '-999em'
+        // }
+      }
     }
   }
 </script>
 
 <style scoped>
+#commentableArea {
+  position: relative;
+}
+
 .popup {
   position: absolute;
   color: #FFF;
