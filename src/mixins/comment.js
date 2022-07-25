@@ -1,3 +1,8 @@
+/* HOW TO USE:
+
+
+
+*/
 export default {
     data: () => ({
             offsetTop: 0,
@@ -46,7 +51,9 @@ export default {
         getCommentableElements (commentableArea) {
             for (const child of commentableArea.childNodes) {
                 if (child.id === 'popup') {
-                    this.commentableElements.push(child.childNodes[0])
+                    for (const popupChildren of child.childNodes) {
+                        this.commentableElements.push(popupChildren)
+                    }
                 }
                 this.commentableElements.push(child)
             }

@@ -9,9 +9,7 @@
           <div class="mt-5 ce">
             SECOND DIV
           </div>
-          <div class="popup" :style="{top: offsetTop, right: offsetRight}" ref="popup" id="popup" @click="postComment">
-            <span class="mx-5" id="popupChild">+</span>
-          </div>
+          <CommentPlugin></CommentPlugin>
         </div>
       </v-col>
     </v-row>
@@ -19,11 +17,13 @@
 </template>
 
 <script>
-  import comment from '../mixins/comment'
+  import CommentPlugin from './CommentPlugin'
 
   export default {
     name: 'HelloWorld',
-    mixins: [ comment ]
+    components: {
+      CommentPlugin
+    }
   }
 </script>
 
@@ -45,6 +45,7 @@
   transform-origin: center center;
   cursor: pointer;
 }
+
 .popup:after {
   content: "";
   border-bottom: 5px solid #000;
