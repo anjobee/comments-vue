@@ -53,17 +53,14 @@
             const newRange = new Range()
             newRange.selectNode(e.target)
             const divRect = newRange.getBoundingClientRect()
-            // this.offsetTop = `${divRect.bottom - (divRect.height / 2)}px`
-            this.offsetTop = `${divRect.top - this.rect.top - (this.popupRect.height / 2)}px`
-            console.log(this.offsetTop)
-            // const right = this.rect.right - this.rect.left
-            // this.offsetRight = `${right}px`
+            const popupOffset = this.popupRect.height * 0.25
+            this.offsetTop = `${divRect.top - this.rect.top - popupOffset}px`
             this.offsetRight = `10%`
           }, 0)
         }
-        // else {
-        //   this.offsetRight = '-999em'
-        // }
+        else {
+          this.offsetRight = '-999em'
+        }
       }
     }
   }
