@@ -18,6 +18,10 @@
 
   || ONE GETTER ON PARENT <-> ONE GETTER ON CHILD, TRY TO USE GETTERS ONLY
   */
+
+  // COMMENTS:
+  // 1. CRUD operation methods should be emitted from parent for customization of functions?
+
   import comment from '../mixins/comment'
 
   export default {

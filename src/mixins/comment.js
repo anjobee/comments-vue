@@ -15,6 +15,11 @@ export default {
             const commentableArea = document.getElementById('commentableArea')
             const popup = document.getElementById('popup')
 
+            if (!commentableArea) {
+                console.warn('Comment plugin is currently off: No "commentableArea" ID has been found in any HTML element/s.')
+                return
+            }
+
             this.getCommentableElements(commentableArea)
 
             this.commentableAreaBounds = this.getBounds(commentableArea)
